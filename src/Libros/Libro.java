@@ -1,6 +1,8 @@
 
 package Libros;
 
+import java.util.Date;
+
 
 public abstract class Libro {
     String nombre;
@@ -15,8 +17,10 @@ public abstract class Libro {
     }
     
     
-    public abstract void getFechaReserva(int fechaReserva);
-    public abstract void getFechaEntrega(int fechaEntrega);
+    public abstract void setFechaReserva(Date fechaReserva);
+    public abstract void setFechaEntrega(Date fechaEntrega);
+    public abstract String getCategoria();
+    public abstract Date getFechaEntrega();
 
     public String getNombre() {
         return nombre;
@@ -29,11 +33,17 @@ public abstract class Libro {
     public String getAutor() {
         return autor;
     }
+    
 
     public void setEjemplares(int ejemplares) {
         this.ejemplares = ejemplares;
     }
     
-
+    public void disminuirEjemplares() {
+        this.ejemplares = this.ejemplares-1;
+    }
     
+    public void aumentarEjemplares() {
+        this.ejemplares = this.ejemplares+1;
+    }
 }

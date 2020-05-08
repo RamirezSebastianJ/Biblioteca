@@ -42,5 +42,12 @@ public class Usuario {
     public ArrayList<Libro> getLibrosPrestados() {
         return librosPrestados;
     }
-
+    
+    public void setLibrosPrestados(Libro borrar) {
+        for(int i = 0; i < librosPrestados.size(); i++){
+            if(librosPrestados.get(i)==borrar){
+                librosPrestados.remove(i);
+            }
+        }
+    }
 }

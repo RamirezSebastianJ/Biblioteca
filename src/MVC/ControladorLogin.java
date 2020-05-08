@@ -16,14 +16,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 
 public class ControladorLogin implements ActionListener{
 
     int auxiliarNum = 0;
-
+    int j;
     VentanaLoger ventanaLoger;
     LogicaLogin logicaLogin;
     
@@ -107,12 +106,15 @@ public class ControladorLogin implements ActionListener{
         this.intModLibro.jGuardar.addActionListener(this);
         this.intModLibro.jDescartar.addActionListener(this);
         //Botones InterfazDevolverLibro
+        this.inDevLibro.jBuscar.addActionListener(this);
         this.inDevLibro.jEntregar.addActionListener(this);
         this.inDevLibro.jCancelar.addActionListener(this);
-        //Botones InterfazDevolverLibro
+        //Botones InterfazLlevarLibro
+        intLlevarLibro.jBuscar.addActionListener(this);
         this.intLlevarLibro.jGuardar.addActionListener(this);
         this.intLlevarLibro.jDescartar.addActionListener(this);
         //Botones InterfazReservarLibro
+        this.intResLibro.jBuscar.addActionListener(this);
         this.intResLibro.jGuardar.addActionListener(this);
         this.intResLibro.jDescartar.addActionListener(this); 
     }
@@ -245,19 +247,6 @@ public class ControladorLogin implements ActionListener{
                 if(ingresar == interfazUsuario.jDevolver){
                     interfazUsuario.setVisible(false);
                     iniciarDevolver();
-                    //inDevLibro.jComboBox1.removeAllItems();
-                    arrayLibUserAux = auxUserElemental.getLibrosPrestados();
-                    for(int i=0; i < arrayLibUserAux.size(); i++){
-                        auxiliar = arrayLibUserAux.get(i);
-                        inDevLibro.jComboBox1.addItem(auxiliar.getNombre());
-                        inDevLibro.jComboBox1.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				inDevLibro.jTextField1.setText("capturado");
-                                System.out.println("capturado");
-			}
-                        });
-                    }
                     auxiliarNum = 5;
                 }
                 if(ingresar == interfazUsuario.jLlevar){
@@ -332,13 +321,26 @@ public class ControladorLogin implements ActionListener{
 
                 break;
             case 5:
-                if(ingresar == inDevLibro.jEntregar){
-                    inDevLibro.setVisible(false);
+                if(ingresar == inDevLibro.jBuscar){
                     
-                    inDevLibro.jComboBox1.addItem("normal");
-                    iniciarInterfazUser();
-                    auxiliarNum = 2;
+                    arrayLibUserAux = auxUserElemental.getLibrosPrestados();
+                    for(int i=0; i<arrayLibUserAux.size(); i++){
+                        auxiliar = arrayLibUserAux.get(i);
+                        if(auxiliar.equals(inDevLibro.jTextField2)){
+                            inDevLibro.jTextField1.setText(auxiliar.getFechaEntrega()+"");
+                        }
+                    }
                 }
+                
+                if(ingresar == inDevLibro.jEntregar){
+                    if(!inDevLibro.jTextField1.getText().equals("")){
+                        auxUserElemental.setLibrosPrestados(auxiliar);
+                        inDevLibro.setVisible(false);
+                        iniciarInterfazUser();
+                        auxiliarNum = 2;
+                    }                   
+                }
+                
                 if(ingresar == inDevLibro.jCancelar){
                     inDevLibro.setVisible(false);
                     iniciarInterfazUser();
@@ -346,10 +348,32 @@ public class ControladorLogin implements ActionListener{
                 }
                 break;
             case 6:
+                if(ingresar == intLlevarLibro.jBuscar){
+                    System.out.println("Hola");
+                    for( j=0; j<libros.size(); j++){
+                        
+                        auxiliar = libros.get(j);
+                        if(auxiliar.getNombre().equals(intLlevarLibro.jTextField2.getText())){
+                            if(auxiliar.getEjemplares()>0){
+                                intLlevarLibro.jNombreLibro.setText(auxiliar.getNombre());
+                                intLlevarLibro.jAutorLibro.setText(auxiliar.getAutor());
+                                intLlevarLibro.jEjemplares.setText(auxiliar.getEjemplares()+"");
+                                intLlevarLibro.jCategoria.setText(auxiliar.getCategoria());
+                                intLlevarLibro.jFechaEDev.setText(auxiliar.getFechaEntrega()+"");
+                                j=j*100;
+                            }
+                        }
+                    }
+                }
+                
                 if(ingresar == intLlevarLibro.jGuardar){
-                    intLlevarLibro.setVisible(false);
-                    iniciarInterfazUser();
-                    auxiliarNum = 2;
+                    if(!intLlevarLibro.jFechaEDev.getText().equals("")){
+                        auxiliar.disminuirEjemplares();
+                        libros.add(j/100, auxiliar);
+                        intLlevarLibro.setVisible(false);
+                        iniciarInterfazUser();
+                        auxiliarNum = 2;
+                    }
                 }
                 if(ingresar == intLlevarLibro.jDescartar){
                     intLlevarLibro.setVisible(false);
@@ -359,10 +383,32 @@ public class ControladorLogin implements ActionListener{
 
                 break;
             case 7:
+                
+                if(ingresar == intResLibro.jBuscar){
+                    System.out.println("entra");
+                    for( j=0; j<libros.size(); j++){
+                        auxiliar = libros.get(j);
+                        if(auxiliar.getNombre().equals(intResLibro.jTextField2.getText())){
+                            if(auxiliar.getEjemplares()>0){
+                                intResLibro.nombreLibro.setText(auxiliar.getNombre());
+                                intResLibro.autorLibro.setText(auxiliar.getAutor());
+                                intResLibro.ejmeplaresL.setText(auxiliar.getEjemplares()+"");
+                                intResLibro.categoriaL.setText(auxiliar.getCategoria());
+                                intResLibro.fechaDevolucion.setText(auxiliar.getFechaEntrega()+"");
+                                j=j*100;
+                            }
+                        }
+                    }
+                }
+                
                 if(ingresar == intResLibro.jGuardar){
-                    intResLibro.setVisible(false);
-                    iniciarInterfazUser();
-                    auxiliarNum = 2;
+                    if(!intResLibro.fechaDevolucion.getText().equals("")){
+                        auxiliar.disminuirEjemplares();
+                        libros.add(j/100, auxiliar);
+                        intLlevarLibro.setVisible(false);
+                        iniciarInterfazUser();
+                        auxiliarNum = 2;
+                    }
                 }
                 if(ingresar == intResLibro.jDescartar){
                     intResLibro.setVisible(false);
@@ -372,8 +418,6 @@ public class ControladorLogin implements ActionListener{
                 break;
         }
 
-
-        
     }
     
 }

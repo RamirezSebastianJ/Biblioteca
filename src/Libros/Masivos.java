@@ -1,11 +1,14 @@
 
 package Libros;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class Masivos extends Libro {
     
-    int fechaReserva;
-    int fechaEntrega;
+    Date fechaReserva;
+    Date fechaEntrega;
     
     public Masivos(String nombre, int ejemplares, String autor) {
         super(nombre, ejemplares, autor);
@@ -13,13 +16,25 @@ public class Masivos extends Libro {
     
 
     @Override
-    public void getFechaReserva(int fechaReserva) {
+    public void setFechaReserva(Date fechaReserva) {
         this.fechaReserva = fechaReserva;
     }
 
     @Override
-    public void getFechaEntrega(int fechaEntrega) {
-        this.fechaEntrega = fechaReserva + 20;
+    public void setFechaEntrega(Date fechaEntrega) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaEntrega); 
+        calendar.add(Calendar.DAY_OF_YEAR, 20);
+        this.fechaEntrega = calendar.getTime();
+    }
+    
+    @Override
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+    @Override
+    public String getCategoria() {
+        return "Masivos";
     }
     
 }

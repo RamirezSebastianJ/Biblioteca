@@ -1,11 +1,14 @@
 
 package Libros;
 
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class Criticos extends Libro {
     
-    int fechaReserva;
-    int fechaEntrega;
+    Date fechaReserva;
+    Date fechaEntrega;
     
     public Criticos(String nombre, int ejemplares, String autor) {
         super(nombre, ejemplares, autor);
@@ -13,20 +16,38 @@ public class Criticos extends Libro {
     
 
     @Override
-    public void getFechaReserva(int fechaReserva) {
+    public void setFechaReserva(Date fechaReserva) {
         this.fechaReserva = fechaReserva;
     }
 
-    public void getFechaEntrega(int fechaEntrega,String usuario) {
-        if(usuario.equals("docente")){
-            this.fechaEntrega = fechaReserva + 5;
+    public void setFechaEntrega(Date fechaEntrega,int user) {
+        if(user == 1){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fechaEntrega); 
+            calendar.add(Calendar.DAY_OF_YEAR, 5);
+            this.fechaEntrega = calendar.getTime();
         }else{
-            this.fechaEntrega = fechaReserva + 2;
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(fechaEntrega); 
+            calendar.add(Calendar.DAY_OF_YEAR, 2);
+            this.fechaEntrega = calendar.getTime();
         }  
     }
 
     @Override
-    public void getFechaEntrega(int fechaEntrega) {
-        this.fechaEntrega = fechaReserva + 2;
+    public void setFechaEntrega(Date fechaEntrega) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaEntrega); 
+        calendar.add(Calendar.DAY_OF_YEAR, 2);
+        this.fechaEntrega = calendar.getTime();
+    }
+    
+    @Override
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+     @Override
+    public String getCategoria() {
+        return "Criticos";
     }
 }
