@@ -11,6 +11,7 @@ import MVC.Administrador.InterfazModificarLibro;
 import MVC.Usuario.InterfazDevolverLibro;
 import MVC.Usuario.InterfazLlevarLibro;
 import MVC.Usuario.InterfazReservarLibro;
+import Usuarios.Usuario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -52,11 +53,24 @@ public class ControladorLogin implements ActionListener{
         auxiliar = factory.createLibro("Cien Años de soledad", 2, "Gabo", "normal");
         libros.add(auxiliar);
         auxiliar = null;
-        auxiliar = factory.createLibro("Elbosson De higgs No te gva a hacer la cama", 3, "SantaOlalla", "criticos");
+        auxiliar = factory.createLibro("Elbosson De higgs No te va a hacer la cama", 3, "SantaOlalla", "criticos");
         libros.add(auxiliar);
         auxiliar = null;
         auxiliar = factory.createLibro("La ileada", 10, "Homero", "masivos");
         libros.add(auxiliar);
+    }
+    
+    public static Usuario auxiliarUser;
+    public static Usuario auxUserElemental;
+    public static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+    public static ArrayList<Libro> arrayLibUserAux;
+    
+    public void llenarUsuarios(){
+        auxiliarUser = new Usuario("juan", "juan","juan", 1 );
+        usuarios.add(auxiliarUser);
+        auxiliarUser = null;
+        auxiliarUser = new Usuario("Patricia", "patricia","patricia", 2 );
+        usuarios.add(auxiliarUser);
     }
     
     public ControladorLogin(){}
@@ -104,6 +118,7 @@ public class ControladorLogin implements ActionListener{
     }
     
     public void iniciarLogin(){
+        llenarUsuarios();
         Llenar();
         ventanaLoger.setTitle("Blioteca");
         ventanaLoger.setLocationRelativeTo(null);
@@ -179,17 +194,31 @@ public class ControladorLogin implements ActionListener{
                         interfazAdministrador.jTextoUser.setText("Admin");
                         interfazAdministrador.jTextoID.setText("1234");
                         auxiliarNum = 1;
-                    }
-                    
-                    if((ventanaLoger.jUser.getText().equals("docente") && ventanaLoger.jPassword.getText().equals("docente")) |
-                        (ventanaLoger.jUser.getText().equals("general") && ventanaLoger.jPassword.getText().equals("general"))){
+                    }else{
                         
-                        ventanaLoger.setVisible(false);
-                        auxiliarNum = 2;
-                        iniciarInterfazUser();
-                        interfazUsuario.jTextuser.setText("Juan");
-                        interfazUsuario.jtextID.setText("124");
-                        interfazUsuario.jtextOcupacion.setText("Estudiante");
+                        String usuarioAux = ventanaLoger.jUser.getText();
+                        String passwordAux = ventanaLoger.jPassword.getText();
+                        
+                        //System.out.println("2. " + usuarios.size());
+                        for(int i=0; i<usuarios.size(); i++){
+                            auxiliarUser = usuarios.get(i);
+                            
+                            if(auxiliarUser.getUserlogin().equals(usuarioAux)&&auxiliarUser.getContraseña().equals(passwordAux)){
+                                ventanaLoger.setVisible(false);
+                                auxUserElemental = auxiliarUser;
+                                auxiliarNum = 2;
+                                iniciarInterfazUser();
+                                interfazUsuario.jTextuser.setText(auxUserElemental.getNombre());
+                                interfazUsuario.jtextID.setText(auxUserElemental.getUserlogin());
+                                if(auxUserElemental.getTipo() == 1){
+                                    interfazUsuario.jtextOcupacion.setText("Estudiante");
+                                }
+                                if(auxUserElemental.getTipo() == 1){
+                                    interfazUsuario.jtextOcupacion.setText("Docente");
+                                }
+
+                            }
+                        }
                     }         
                 }  
                 break;
@@ -216,6 +245,19 @@ public class ControladorLogin implements ActionListener{
                 if(ingresar == interfazUsuario.jDevolver){
                     interfazUsuario.setVisible(false);
                     iniciarDevolver();
+                    //inDevLibro.jComboBox1.removeAllItems();
+                    arrayLibUserAux = auxUserElemental.getLibrosPrestados();
+                    for(int i=0; i < arrayLibUserAux.size(); i++){
+                        auxiliar = arrayLibUserAux.get(i);
+                        inDevLibro.jComboBox1.addItem(auxiliar.getNombre());
+                        inDevLibro.jComboBox1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				inDevLibro.jTextField1.setText("capturado");
+                                System.out.println("capturado");
+			}
+                        });
+                    }
                     auxiliarNum = 5;
                 }
                 if(ingresar == interfazUsuario.jLlevar){
@@ -292,6 +334,8 @@ public class ControladorLogin implements ActionListener{
             case 5:
                 if(ingresar == inDevLibro.jEntregar){
                     inDevLibro.setVisible(false);
+                    
+                    inDevLibro.jComboBox1.addItem("normal");
                     iniciarInterfazUser();
                     auxiliarNum = 2;
                 }

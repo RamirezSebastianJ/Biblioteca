@@ -1,40 +1,46 @@
 
 package Usuarios;
 
+import Libros.Libro;
+import java.util.ArrayList;
+
 
 public class Usuario {
     String nombre;
-    String tipo;
-    float id;
-
-    public Usuario(String nombre, String tipo, float id) {
+    String userlogin;
+    String contraseña;
+    int tipo;
+    ArrayList<Libro> librosPrestados = new ArrayList<Libro>();
+        
+    public Usuario(String nombre, String userlogin, String contraseña, int tipo) {
         this.nombre = nombre;
+        this.userlogin = userlogin;
+        this.contraseña = contraseña;
         this.tipo = tipo;
-        this.id = id;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public float getId() {
-        return id;
+    public String getUserlogin() {
+        return userlogin;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getContraseña() {
+        return contraseña;
+    }
+    
+    public void setArray(Libro auxiliar){
+        librosPrestados.add(auxiliar);
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public void setId(float id) {
-        this.id = id;
+    public ArrayList<Libro> getLibrosPrestados() {
+        return librosPrestados;
     }
 
 }

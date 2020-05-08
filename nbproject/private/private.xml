@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/Usuario/InterfazDevolverLibro.java</file>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/LogicaLogin.java</file>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/ControladorLogin.java</file>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/Administrador/ControladorAdministrador.java</file>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/Usuario/ControladorUsuario.java</file>
-            <file>file:/C:/Users/juans/Documents/NetBeansProjects/Biblioteca/src/MVC/Usuario/InterfazLlevarLibro.java</file>
+            <file>file:/C:/Users/SERVIDOR/Documents/GitHub/Biblioteca/src/MVC/Usuario/InterfazDevolverLibro.java</file>
+            <file>file:/C:/Users/SERVIDOR/Documents/GitHub/Biblioteca/src/Usuarios/Usuario.java</file>
+            <file>file:/C:/Users/SERVIDOR/Documents/GitHub/Biblioteca/src/MVC/ControladorLogin.java</file>
         </group>
     </open-files>
 </project-private>
